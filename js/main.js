@@ -160,27 +160,4 @@
       map.focus({ preventScroll: true });
     });
   }
-
-  /* ---------- variant switcher steps aside from any button it would cover ---------- */
-  var pill = document.querySelector('.variants');
-  if (pill) {
-    var btns = Array.prototype.slice.call(document.querySelectorAll('main .btn, main .map__btn, .contacts a, .rating a, .footer a'));
-    var pTick = false;
-    var checkPill = function () {
-      pTick = false;
-      var r = pill.firstElementChild.getBoundingClientRect();
-      var hit = btns.some(function (b) {
-        if (b.hidden) return false;
-        var q = b.getBoundingClientRect();
-        return q.width && q.right > r.left - 4 && q.left < r.right + 4 && q.bottom > r.top - 4 && q.top < r.bottom + 4;
-      });
-      pill.classList.toggle('is-away', hit);
-    };
-    var onPill = function () { if (!pTick) { pTick = true; requestAnimationFrame(checkPill); } };
-    window.addEventListener('scroll', onPill, { passive: true });
-    window.addEventListener('resize', onPill);
-    window.addEventListener('load', checkPill);
-    document.addEventListener('pill:check', onPill);
-    checkPill();
-  }
 })();
