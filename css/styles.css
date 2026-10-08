@@ -177,3 +177,18 @@ h2{color:var(--teal-d)}
 .js [data-reveal].is-in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.js [data-reveal]{opacity:1;transform:none;transition:none}}
 .simple body{min-height:100vh;min-height:100svh;display:flex;flex-direction:column}.simple__main{flex:1;padding:64px 0}
+/* training: course list fills the band */
+.training__body{display:grid;gap:0;justify-items:start}
+.training__body p{margin-bottom:18px}
+.courses{width:100%;margin:0 0 26px;border-top:1px solid rgba(255,255,255,.2)}
+.courses li{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:2px 18px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.2)}
+.courses__name{font:500 1.25rem/1.25 var(--f-display);color:#fff}
+.courses__meta{font-size:15px;color:#b8cfcb}
+@media (min-width:860px){.training__in{align-items:center}}
+/* desktop: switcher becomes a slim vertical rail in a widened left gutter, so it covers no text (QA 1280 note) */
+@media (min-width:1024px){
+  main .wrap,.footer .wrap{width:min(100% - 112px,var(--wrap))}
+  .variants{left:8px;bottom:auto;top:50%;transform:translateY(-50%)}
+  .variants ul{flex-direction:column;gap:3px;padding:3px}
+  .variants a{width:28px;height:28px;font-size:13px}
+}

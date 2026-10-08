@@ -59,3 +59,6 @@
   .hero8__facts li:first-child{border-left:0;padding-left:0}
 }
 @media (prefers-reduced-motion:reduce){.hero8__photo{transition:none}}
+.v3 .courses,.v3 .courses li{border-color:var(--line)}
+.v3 .courses__name{color:var(--teal-d);font-style:italic}
+.v3 .courses__meta{color:var(--muted)}

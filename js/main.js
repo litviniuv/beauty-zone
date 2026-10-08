@@ -15,14 +15,30 @@
     var b = document.body.style;
     b.position = 'fixed'; b.top = (-savedY) + 'px'; b.left = '0'; b.right = '0'; b.width = '100%';
   }
+  /* jump to y with no animation, whatever html{scroll-behavior} says */
+  function jumpTo(y) {
+    root.style.scrollBehavior = 'auto';
+    try { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); } catch (e) { window.scrollTo(0, y); }
+    if (Math.abs((window.scrollY || window.pageYOffset || 0) - y) > 1) {
+      root.scrollTop = y; document.body.scrollTop = y;
+    }
+  }
+  var behaviorRaf = 0;
+  function releaseBehavior() {
+    cancelAnimationFrame(behaviorRaf);
+    behaviorRaf = requestAnimationFrame(function () {
+      behaviorRaf = requestAnimationFrame(function () { root.style.scrollBehavior = ''; });
+    });
+  }
   function unlock() {
+    /* while locked the page sits at scroll 0 (body fixed at top:-Y): put it back at Y
+       instantly, so there is never a smooth pass through the top of the page */
+    root.style.scrollBehavior = 'auto';
     var b = document.body.style;
     b.position = ''; b.top = ''; b.left = ''; b.right = ''; b.width = '';
     root.classList.remove('is-locked');
-    var prev = root.style.scrollBehavior;
-    root.style.scrollBehavior = 'auto';
-    window.scrollTo(0, savedY);
-    root.style.scrollBehavior = prev;
+    jumpTo(savedY);
+    releaseBehavior();
   }
   function open() {
     menu.hidden = false;
@@ -40,15 +56,24 @@
     unlock();
     if (returnFocus !== false) burger.focus({ preventScroll: true });
   }
+  /* called right after close(): start from the restored position on the next frame
+     and glide to the section (window.scrollTo keeps the sticky strip + header on screen) */
   function goTo(hash) {
     var t = document.querySelector(hash);
     if (!t) return;
-    var pad = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
-    var y = Math.max(0, t.getBoundingClientRect().top + window.scrollY - pad);
-    window.scrollTo({ top: y, behavior: reduce.matches ? 'auto' : 'smooth' });
+    var fromY = savedY;
     history.replaceState(null, '', hash);
-    var h = t.querySelector('h2, h1');
-    if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+    requestAnimationFrame(function () {
+      var cur = window.scrollY || window.pageYOffset || 0;
+      if (Math.abs(cur - fromY) > 2) { jumpTo(fromY); cur = fromY; }
+      var pad = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+      var y = Math.max(0, Math.round(t.getBoundingClientRect().top + cur - pad));
+      if (reduce.matches) jumpTo(y);
+      else window.scrollTo({ top: y, left: 0, behavior: 'smooth' });
+      releaseBehavior();
+      var h = t.querySelector('h2, h1');
+      if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+    });
   }
   if (burger && menu) {
     burger.addEventListener('click', function () { isOpen() ? close() : open(); });
