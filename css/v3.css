@@ -1,0 +1,61 @@
+/* Variant 3 · «Рукописное имя над услугой» (prompt 8): warm visit board, teal light spot */
+.v3{--board:#f2eadc;--bg:#f2eadc;--surface:rgba(255,253,248,.6);--surface-2:#e7dccb;--line:rgba(19,42,45,.14);
+  --accent:#0f4a4f;--accent-hover:#0a3236;--on-accent:#fbf6ec;--focus:#b48d42}
+.v3 body{background:
+  radial-gradient(70% 50% at 10% 0%,rgba(255,255,255,.55),rgba(255,255,255,0) 60%),
+  radial-gradient(60% 40% at 100% 60%,rgba(209,171,98,.12),rgba(209,171,98,0) 70%),
+  var(--board) fixed}
+.spot{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(380px circle at var(--x,72%) var(--y,30%),rgba(15,74,79,.1),rgba(15,74,79,0) 70%);transition:background-position .2s}
+.v3 main,.v3 .footer{position:relative;z-index:1}
+.v3 .header{background:rgba(242,234,220,.93);color:var(--teal-d);border-bottom-color:var(--line)}
+.v3 .brand{color:var(--teal-d)}
+.v3 .order-link{color:var(--muted)}
+.v3 .nav a:hover{color:var(--gold-d)}
+.v3 .menu{background:var(--board);color:var(--teal-d)}
+.v3 .menu__nav a{border-bottom-color:var(--line)}
+.v3 .menu__nav li:last-child a,.v3 .menu__contacts{color:var(--muted)}
+.v3 .menu__contacts a{color:var(--teal-d)}
+.v3 .demo-strip{background:#132a2d}
+.v3 h2,.v3 .sub-h{font-style:italic;color:var(--teal-d)}
+.v3 .svc__item h3{font-style:italic}
+.v3 .services,.v3 .contacts,.v3 .training{background:transparent;color:var(--ink)}
+.v3 .training{border-block:1px solid var(--line)}
+.v3 .training h2{color:var(--teal-d)}
+.v3 .training p{color:#2e4144}
+.v3 .training .btn--ghost{color:var(--teal)}
+.v3 .training .btn--ghost:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
+.v3 .svc__item{background:var(--surface);border-color:var(--line);border-top:1px solid var(--line)}
+.v3 .svc__item--cta{background:var(--teal);color:var(--on-accent)}
+.v3 .svc__item--cta .btn--accent{background:var(--gold);color:#0c2e31}
+.v3 .rating a{background:var(--surface)}
+.v3 .map__ph{background:repeating-linear-gradient(0deg,rgba(19,42,45,.06) 0 1px,transparent 1px 44px),repeating-linear-gradient(90deg,rgba(19,42,45,.06) 0 1px,transparent 1px 44px),#ebe1d0}
+.v3 .footer{background:#132a2d}
+/* photos sit slightly tilted on the board (same size, tight gaps) */
+.v3 .grid34{gap:10px}
+.v3 .tile{border-radius:2px;box-shadow:0 10px 22px -14px rgba(19,42,45,.55);background:var(--surface-2)}
+.v3 .tile:nth-child(odd){rotate:-1deg}
+.v3 .tile:nth-child(even){rotate:1deg}
+
+/* hero */
+.hero8{position:relative;padding:36px 0 44px}
+.hero8__in{display:grid;gap:22px}
+.hero8__brow{margin:0;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.hero8 h1{margin:.35em 0 0;color:var(--teal-d);font-size:clamp(2.2rem,1.5rem + 3.4vw,4.6rem);max-width:13ch;line-height:1.05}
+.hero8__note{margin:.2em 0 .7em .6em;font:italic 500 clamp(1.35rem,1.1rem + 1vw,2rem)/1.15 var(--f-display);color:var(--gold-d);rotate:-3deg;transform-origin:left center}
+.hero8__line{color:#2e4144;max-width:30rem;margin-bottom:22px}
+.hero8__photo{margin:0;justify-self:center;width:min(74vw,330px);rotate:3deg;transition:transform .35s ease-out;will-change:transform}
+.hero8__photo img{width:100%;aspect-ratio:3/4;object-fit:cover;border:8px solid #fffdf8;border-bottom-width:28px;box-shadow:0 22px 40px -22px rgba(19,42,45,.6)}
+.hero8__photo.is-held{transition:transform .2s ease-out}
+.hero8__facts{display:grid;gap:0;border-top:1px solid var(--line)}
+.hero8__facts li{padding:12px 0;border-bottom:1px solid var(--line);font-weight:600;color:var(--teal-d)}
+@media (max-width:479px){.hero8 .btn{width:100%}}
+@media (min-width:900px){
+  .hero8{min-height:calc(100svh - var(--demo-h) - var(--header-h));display:flex;align-items:center;padding:48px 0}
+  .hero8__in{grid-template-columns:1.2fr .8fr;column-gap:56px;row-gap:40px;align-items:center}
+  .hero8__photo{grid-column:2;grid-row:1;width:min(30vw,360px)}
+  .hero8__facts{grid-column:1 / -1;grid-template-columns:repeat(3,1fr);border-top:0}
+  .hero8__facts li{border-bottom:0;padding:6px 24px;border-left:1px solid var(--teal-d)}
+  .hero8__facts li:first-child{border-left:0;padding-left:0}
+}
+@media (prefers-reduced-motion:reduce){.hero8__photo{transition:none}}
